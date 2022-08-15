@@ -1,3 +1,4 @@
+import re
 import requests
 import tensorflow as tf
 import discord
@@ -46,7 +47,7 @@ class CustomClient(discord.Client):
             predicts = list()
             for attachment in message.attachments:
                 url: str = attachment.url
-                if not url.find(r"[\w-]+\.(jpg|jpeg|png)"):
+                if not len(re.findall(r"[\w-]+\.(jpg|jpeg|png|mp4)$", url)) == 0:
                     continue
 
                 ans = await self.predict(
