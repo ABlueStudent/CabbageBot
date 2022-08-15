@@ -44,8 +44,8 @@ class CustomClient(discord.Client):
 
         if message.channel.name == "cabbage-bot" and not len(message.attachments) == 0:
             predicts = list()
-            url: str = attachment.url
             for attachment in message.attachments:
+                url: str = attachment.url
                 if not url.find(r"[\w-]+\.(jpg|jpeg|png)"):
                     continue
 
