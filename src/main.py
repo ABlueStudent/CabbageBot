@@ -43,11 +43,11 @@ class CustomClient(discord.Client):
         if message.author.id == self.user.id:
             return
 
-        if message.channel.name == "cabbage-bot" and not len(message.attachments) == 0:
+        if message.channel.name == "cabbage-bot" and len(message.attachments) != 0:
             predicts = list()
             for attachment in message.attachments:
                 url: str = attachment.url
-                if len(re.findall(r"[\w-]+\.(jpg|jpeg|png|mp4)$", url)) == 0:
+                if len(re.findall(r"[\w-]+\.(jpg|jpeg|png)$", url)) == 0:
                     continue
 
                 ans = await self.predict(
@@ -60,7 +60,9 @@ class CustomClient(discord.Client):
                     predicts.append("uncertain")
                 else:
                     predicts.append(tags[ans[0]])
-            await message.reply(",".join(predicts), mention_author=True)
+
+            if len(predicts) != 0:
+                await message.reply(",".join(predicts), mention_author=True)
 
     async def preproc(self, url: str):
         try:
