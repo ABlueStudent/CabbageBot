@@ -47,7 +47,7 @@ class CustomClient(discord.Client):
             predicts = list()
             for attachment in message.attachments:
                 url: str = attachment.url
-                if len(re.findall(r"[\w-]+\.(jpg|jpeg|png)$", url)) == 0:
+                if len(re.findall(r"[\w-]+\.(jpg|jpeg|png)$", url, re.IGNORECASE)) == 0:
                     continue
 
                 ans = await self.predict(
